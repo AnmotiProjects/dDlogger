@@ -1,0 +1,24 @@
+{
+  "name": "dlogger",
+  "version": "1.0.0",
+  "description": "A simple logger.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnmotiProjects/dlogger.git"
+  },
+  "keywords": [
+    "javascript",
+    "node",
+    "logger"
+  ],
+  "author": "AnmotiProjects",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AnmotiProjects/dlogger/issues"
+  },
+  "homepage": "https://github.com/AnmotiProjects/dlogger#readme"
+}
