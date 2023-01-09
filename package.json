@@ -1,5 +1,5 @@
 {
-  "name": "dlogger",
+  "name": "dd-logger",
   "version": "1.0.0",
   "description": "A simple logger.",
   "main": "./lib/index.js",
@@ -8,17 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AnmotiProjects/dlogger.git"
+    "url": "git+https://github.com/AnmotiProjects/dd-logger.git"
   },
   "keywords": [
     "javascript",
     "node",
     "logger"
   ],
-  "author": "AnmotiProjects",
+  "author": "AnmotiProjects, anmoti",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AnmotiProjects/dlogger/issues"
+    "url": "https://github.com/AnmotiProjects/dd-logger/issues"
   },
-  "homepage": "https://github.com/AnmotiProjects/dlogger#readme"
+  "homepage": "https://github.com/AnmotiProjects/dd-logger#readme"
 }

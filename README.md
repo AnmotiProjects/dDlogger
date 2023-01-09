@@ -1,4 +1,4 @@
-# dlogger
+# dd-logger
 ```javascript
 dlogger.setDefault({
 
