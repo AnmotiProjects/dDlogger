@@ -8,19 +8,18 @@ dlogger.setDefault({
     
     //timeFormat: "YYYY/MM/DD hh:mm:sssss"
     
-    });
-    
- 
-    const  logger = new  dlogger.Channel({ levels: ["error", "warn", "info"]});
+});
 
-    logger.error("Oh no, it is error.");
-    logger.warn("It is info.");
-    logger.debug("Debugging."); //Error
-	```
+const  logger = new  dlogger.Channel({ levels: ["error", "warn", "info"]});
 
-Default is
+logger.error("Oh no, it is error.");
+logger.warn("It is info.");
+logger.debug("Debugging."); //Error
+```
+
+Default Option
 ```json
-    {
+{
     
     levels: ["fatal", "error", "warn", "info", "debug"],
     
@@ -28,5 +27,5 @@ Default is
     
     timeFormat:  "YYYY/MM/DD hh:mm:sssss"
     
-    }
+}
 ```
