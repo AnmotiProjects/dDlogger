@@ -18,7 +18,7 @@ logger.debug("Debugging."); //Error
 ```
 
 Default Option
-```json
+```
 {
     
     levels: ["fatal", "error", "warn", "info", "debug"],
