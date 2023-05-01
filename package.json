@@ -2,9 +2,16 @@
   "name": "dd-logger",
   "version": "1.0.0",
   "description": "A simple logger.",
-  "main": "./lib/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^3.3.4000"
   },
   "repository": {
     "type": "git",

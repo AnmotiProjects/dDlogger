@@ -1,13 +1,18 @@
-const DDlogger = require("./lib/index.js");
-
-DDlogger.setDefault({
-    levels: ["error", "warn", "info"],
-    timezone: 9, //JST = +9
-    //timeFormat: "YYYY/MM/DD hh:mm:sssss"
+const { Logger } = require("./dist/index");
+const logger = new Logger({
+    levels: ["error", "warn", "info"]
 });
-
-const logger = new DDlogger.Channel();
 
 logger.info(`It is "Info"`);
 logger.warn(`It is "Warn"`);
 logger.error(`It is "Error"`);
+
+const channel = logger.createChannel("test");
+channel.info(`It is "Info"`);
+channel.warn(`It is "Warn"`);
+channel.error(`It is "Error"`);
+
+const childChannel = channel.createChild("child");
+childChannel.info(`It is "Info"`);
+childChannel.warn(`It is "Warn"`);
+childChannel.error(`It is "Error"`);
