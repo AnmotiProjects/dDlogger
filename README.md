@@ -1,31 +1,76 @@
 # dd-logger
+
+### SampleCode
+
 ```javascript
-dlogger.setDefault({
+//es module
+//import { Logger } from "dd-logger";
 
-    levels: ["error", "warn", "info"],
-    
-    timezone:  9 //JST = +9
-    
-    //timeFormat: "YYYY/MM/DD hh:mm:sssss"
-    
-});
+const { Logger } = require("dd-logger");
 
-const  logger = new  dlogger.Channel({ levels: ["error", "warn", "info"]});
+const logger = new Logger();
 
-logger.error("Oh no, it is error.");
-logger.warn("It is info.");
-logger.debug("Debugging."); //Error
+const channel = logger.createChannel("main");
+channel.debug("debug");//[nowTime][main] [DEBUG]debug
+channel.warn("warn");//[nowTime][main] [WARN]warn
+
+const channel2 = logger.createChannel("sub");
+channel2.info("info");//[nowTime][sub] [INFO]info
+channel2.error("error");//[nowTime][sub] [ERROR]error
+
+const childChannel = channel.createChannel("child");
+childChannel.info("info");//[nowTime][main][child] [INFO]info
+
+```
+### API
+
+**Option (OptionParam) interface**
+
+levels: Array\<string>
+```javascript
+//default
+["fatal", "error", "warn", "info", "debug"]
 ```
 
-Default Option
+timeFormat: Function => string
+```javascript
+//default
+(d: Date) => `${padZero(d.getHours(), 2)}:${padZero(d.getMinutes(), 2)}:${padZero(d.getSeconds(), 2)}`
 ```
-{
-    
-    levels: ["fatal", "error", "warn", "info", "debug"],
-    
-    timezone:  "0",
-    
-    timeFormat:  "YYYY/MM/DD hh:mm:sssss"
-    
-}
+
+writeLog: Function => any
+```javascript
+//default
+(line: string) => { console.log(line) }
+
+//example
+(line: string) => { fs.appendFileSync("log.txt", line + "\n") }
 ```
+**Logger class**
+constructor(option?: OptionParam)
+-> Logger
+
+setOption(option: OptionParam)
+-> Option
+
+createChannel(location: string)
+-> Channel
+
+channels
+-> Array\<Channel>
+
+[level]
+-> Function(lineText) => [return]Option.writeLog
+
+**Channel class**
+logger
+-> Logger
+
+childs
+-> Array\<Channel>
+
+createChild(location: string)
+-> Channel
+
+[level]
+-> Function(lineText) => [return]Option.writeLog
