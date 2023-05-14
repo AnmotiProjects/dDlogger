@@ -10,15 +10,26 @@ interface OptionParam {
     writeLog?: Function;
 }
 
-const defaultOption: Option = {
-    levels: ["fatal", "error", "warn", "info", "debug"],
-    timeFormat: (d: Date) => `${padZero(d.getHours(), 2)}:${padZero(d.getMinutes(), 2)}:${padZero(d.getSeconds(), 2)}`,
-    writeLog: (line: string) => { console.log(line) }
-};
+interface messageData {
+    lineText: string;
+    level: string;
+    time: string;
+    location: Array<string>;
+}
 
 function padZero(num: number, length: number): string {
     return num.toString().padStart(length, "0");
 }
+
+const defaultOption: Option = {
+    levels: ["fatal", "error", "warn", "info", "debug"],
+    timeFormat: (d: Date) => `${padZero(d.getHours(), 2)}:${padZero(d.getMinutes(), 2)}:${padZero(d.getSeconds(), 2)}`,
+    writeLog: (data: messageData): any => {
+        const { lineText, level, time, location } = data;
+        console.log(`[${time}][${location.join("][")}] [${level}] ${lineText}`);
+        return true;
+    }
+};
 
 class Logger {
     private option: Option = defaultOption;
@@ -26,18 +37,13 @@ class Logger {
 
     constructor(option: OptionParam) {
         this.setOption(option);
-        this.option.levels.forEach(level => {
-            this[level] = function (lineText: string): any {
-                const time: string = this.option.timeFormat(new Date());
-                return this.option.writeLog(`[${time}] [${level.toUpperCase()}]${lineText}`);
-            };
-        });
     }
 
     setOption(option: OptionParam) {
         return this.option = {
-            ...this.option,
-            ...option
+            levels: (option.levels ?? this.option.levels).map(level => level.toUpperCase()),
+            timeFormat: option.timeFormat ?? this.option.timeFormat,
+            writeLog: option.writeLog ?? this.option.writeLog
         };
     }
 
@@ -56,13 +62,17 @@ class Channel {
 
     constructor(logger: Logger, location: Array<string>, option: Option) {
         this.logger = logger;
-        this.location = location;
+        this.location = location.map(str => str.toLowerCase());
         this.option = option;
-
         this.option.levels.forEach(level => {
-            this[level] = function (lineText: string): any {
-                const time: string = this.option.timeFormat(new Date());
-                return this.option.writeLog(`[${time}][${this.location.join("][")}] [${level.toUpperCase()}]${lineText}`);
+            this[level.toLowerCase()] = function (lineText: string): any {
+                const data = {
+                    lineText,
+                    level,
+                    time: this.option.timeFormat(new Date()),
+                    location: this.location
+                }
+                return this.option.writeLog(data);
             };
         });
     }

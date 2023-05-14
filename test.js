@@ -3,10 +3,6 @@ const logger = new Logger({
     levels: ["error", "warn", "info"]
 });
 
-logger.info(`It is "Info"`);
-logger.warn(`It is "Warn"`);
-logger.error(`It is "Error"`);
-
 const channel = logger.createChannel("test");
 channel.info(`It is "Info"`);
 channel.warn(`It is "Warn"`);
